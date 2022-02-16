@@ -7,7 +7,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Our Blog</h2>
+                    <h2>
+                        {% if request.GET.tag %}
+                            #{{ request.GET.tag }}
+                        {% else %}
+                            Our Blog
+                        {% endif %}
+                    </h2>
                 </div>
             </div>
         </div>
@@ -20,11 +26,12 @@
             <div class="row">
                 {% for blog in posts %}
                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div  class="blog__item">
+                        <div class="blog__item">
                             <div class="blog__item__pic set-bg" data-setbg="{{ blog.main_image.url }}"></div>
                             <div class="blog__item__text">
-                                <span><img src="{% static 'img/icon/calendar.png' %}" alt="">{{ blog.created_at|date:'d F Y' }}</span>
-                                <h5>{{ blog.title }}</h5>
+                                <span><img src="{% static 'img/icon/calendar.png' %}"
+                                           alt="">{{ blog.created_at|date:'d F Y' }}</span>
+                                <h5>{{ blog.title|truncatewords:'6' }}</h5>
                                 <a href="{% url 'blog:blog_detail' blog.id %}">Read More</a>
                             </div>
                         </div>

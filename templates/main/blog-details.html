@@ -12,7 +12,9 @@
                         <ul>
                             <li>By {{ post.author }}</li>
                             <li>{{ post.created_at|date:'F d, Y' }}</li>
-                            <li>8 Comments</li>
+                            <a href="#comments">
+                                <li>{{ post.comments.all.count }} Comments</li>
+                            </a>
                         </ul>
                     </div>
                 </div>
@@ -52,12 +54,7 @@
                                 effect on the skin. The other important ingredient, making hydroderm so effective is
                                 “marine collagen” which along with Vyo-Serum helps revitalize the skin.</p>
                         </div>
-                        <div class="blog__details__quote">
-                            <i class="fa fa-quote-left"></i>
-                            <p>“When designing an advertisement for a particular product many things should be
-                                researched like where it should be displayed.”</p>
-                            <h6>_ John Smith _</h6>
-                        </div>
+
                         <div class="blog__details__text">
                             <p>{{ post.description }}</p>
                         </div>
@@ -76,7 +73,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="blog__details__tags">
                                         {% for tag in post.tags.all %}
-                                            <a href="#">#{{ tag }}</a>
+                                            <a href="{% url 'blog:blog_list' %}?tag={{ tag }}">#{{ tag }}</a>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -95,7 +92,8 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     {% if post.get_next_by_created_at %}
-                                        <a href="{% url 'blog:blog_detail' pk=post.get_next_by_created_at.pk %}" class="blog__details__btns__item blog__details__btns__item--next">
+                                        <a href="{% url 'blog:blog_detail' pk=post.get_next_by_created_at.pk %}"
+                                           class="blog__details__btns__item blog__details__btns__item--next">
                                             <p>Next Pod <span class="arrow_right"></span></p>
                                             <h5>{{ post.get_next_by_created_at.title }}</h5>
                                         </a>
@@ -103,21 +101,42 @@
                                 </div>
                             </div>
                         </div>
+
+                        {% if post.comments.all %}
+                            <div class="blog__details__comment pt-4" id="comments">
+                                <h4>All Comment</h4>
+                            </div>
+                        {% endif %}
+
+                        {% for comment in post.comments.all %}
+                            <div class="blog__details__quote">
+                                <i class="fa fa-quote-left"></i>
+                                <p>
+                                    “{{ comment.comment }}”
+                                </p>
+                                <h6>User : _ {{ comment.name }} _</h6>
+                                <div class="text-right">
+                                    <p>{{ comment.created_at|timesince }} ago</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+
                         <div class="blog__details__comment">
                             <h4>Leave A Comment</h4>
-                            <form action="#">
+                            <form action="{% url 'blog:blog_comment' pk=post.id %}" method="POST">
+                                {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4">
-                                        <input type="text" placeholder="Name">
+                                        <input name="name" type="text" placeholder="Name">
                                     </div>
                                     <div class="col-lg-4 col-md-4">
-                                        <input type="text" placeholder="Email">
+                                        <input name="email" type="text" placeholder="Email">
                                     </div>
                                     <div class="col-lg-4 col-md-4">
-                                        <input type="text" placeholder="Phone">
+                                        <input name="phone" type="text" placeholder="Phone">
                                     </div>
                                     <div class="col-lg-12 text-center">
-                                        <textarea placeholder="Comment"></textarea>
+                                        <textarea name="comment" placeholder="Comment"></textarea>
                                         <button type="submit" class="site-btn">Post Comment</button>
                                     </div>
                                 </div>

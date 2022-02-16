@@ -1,42 +1,40 @@
 from pyexpat import model
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-from .models import BlogPostModel
-from django.core.paginator import Paginator
+
+import kwargs as kwargs
+from django.shortcuts import render, reverse, get_object_or_404
+from django.views.generic import ListView, DetailView, CreateView
+
+from .forms import CommentModelForm
+from .models import BlogPostModel, CommentModel
+from .forms import CommentModelForm
 
 
 
 class BlogListView(ListView):
     template_name = 'main/blog.html'
+    queryset = BlogPostModel.objects.order_by('-pk')
     model = BlogPostModel
     context_object_name = 'posts'
 
     def get_queryset(self, *args, **kwargs):
-        blog = super(BlogListView, self).get_queryset(*args, **kwargs)
-        blog = blog.order_by('-id')
-        return blog
+        qs = BlogPostModel.objects.order_by('-pk')
+        tag = self.request.GET.get('tag')
+        if tag:
+            return qs.filter(tags__title=tag)
+        return qs
 
 class BlogDetailView(DetailView):
     model = BlogPostModel
     template_name = 'main/blog-details.html'
     context_object_name = 'post'
-    paginate_by = 2
 
 
-    # def Paginator(request):
-    #     p = Paginator(BlogPostModel.objects.all(), 2)
-    #     page = request.GET.get('page')
-    #     blogs = p.get_page(page)
-    #
-    #     return render(request, 'main/blog-details.html', context={
-    #         'blog_list' :
-    #     })
+class BlogCommentView(CreateView):
+    form_class = CommentModelForm
 
+    def form_valid(self, form):
+        form.instance.post = get_object_or_404(BlogPostModel, pk=self.kwargs.get('pk'))
+        return super(BlogCommentView, self).form_valid(form)
 
-
-def listing(request):
-    contact_list = BlogPostModel.objects.all()
-    paginator = Paginator(contact_list, 25) # Show 25 contacts per page.
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'list.html', {'page_obj': page_obj})
+    def get_success_url(self):
+        return reverse('blog:blog_detail', kwargs={'pk': self.kwargs.get('pk')})
