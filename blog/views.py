@@ -1,6 +1,3 @@
-from pyexpat import model
-
-import kwargs as kwargs
 from django.shortcuts import render, reverse, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 

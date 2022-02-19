@@ -52,7 +52,7 @@ class CommentModel(models.Model):
     post = models.ForeignKey(BlogPostModel,
                              on_delete=models.CASCADE,
                              related_name='comments',
-                             verbose_name=_('post')
+                             verbose_name=_('post'),
                              )
     name = models.CharField(max_length=64, verbose_name=_('name'))
     email = models.EmailField(verbose_name=_('email'))
