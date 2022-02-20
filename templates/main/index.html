@@ -2,10 +2,9 @@
 {% load static %}
 
 {% block content %}
-    <!-- Hero Section Begin -->
     <section class="hero">
-        {% for banner in  banners %}
-            <div class="hero__slider owl-carousel">
+        <div class="hero__slider owl-carousel">
+            {% for banner in banners %}
                 <div class="hero__items set-bg" data-setbg="{{ banner.banner.url }}">
                     <div class="container">
                         <div class="row">
@@ -13,7 +12,9 @@
                                 <div class="hero__text">
                                     <h6>{{ banner.collection }}</h6>
                                     <h2>{{ banner.title }}</h2>
-                                    <p>{{ banner.description }}</p>
+                                    <p>
+                                        {{ banner.description }}
+                                    </p>
                                     <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                     <div class="hero__social">
                                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -26,8 +27,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+
     </section>
     <!-- Hero Section End -->
 
