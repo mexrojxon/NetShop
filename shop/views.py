@@ -13,6 +13,7 @@ class ShopView(ListView):
         context['categories'] = CategoryModel.objects.all()
         context['brands'] = BrandModel.objects.all()
         context['tags'] = TagModel.objects.all()
+        context['colors'] = ColorModel.objects.all()
         return context
 
     def get_queryset(self):
@@ -30,11 +31,16 @@ class ShopView(ListView):
         brand = self.request.GET.get('brand')
         if brand:
             qs = qs.filter(brand_id=brand)
+            return qs
 
         tag = self.request.GET.get('tag')
         if tag:
             qs = qs.filter(tag__name=tag)
             return qs
+
+        color = self.request.GET.get('color')
+        if color:
+            qs = qs.filter(color__code=color)
         return qs
 
 
