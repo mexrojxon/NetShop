@@ -1277,7 +1277,7 @@ ol {
 	padding-top: 15px;
 }
 
-.shop__sidebar__size label {
+.shop__sidebar__size a {
 	color: #111111;
 	font-size: 15px;
 	font-weight: 700;
@@ -1290,13 +1290,13 @@ ol {
 	cursor: pointer;
 }
 
-.shop__sidebar__size label.active {
+.shop__sidebar__size a.active {
 	background: #111111;
 	color: #ffffff;
 	border-color: #111111;
 }
 
-.shop__sidebar__size label input {
+.shop__sidebar__size a input {
 	position: absolute;
 	visibility: hidden;
 }
@@ -1305,7 +1305,7 @@ ol {
 	padding-top: 15px;
 }
 
-.shop__sidebar__color label {
+.shop__sidebar__color a {
 	height: 30px;
 	width: 30px;
 	border-radius: 50%;
@@ -1316,43 +1316,8 @@ ol {
 	cursor: pointer;
 }
 
-.shop__sidebar__color label.c-1 {
-	background: #0b090c;
-}
 
-.shop__sidebar__color label.c-2 {
-	background: #20315f;
-}
-
-.shop__sidebar__color label.c-3 {
-	background: #f1af4d;
-}
-
-.shop__sidebar__color label.c-4 {
-	background: #636068;
-}
-
-.shop__sidebar__color label.c-5 {
-	background: #57594d;
-}
-
-.shop__sidebar__color label.c-6 {
-	background: #e8bac4;
-}
-
-.shop__sidebar__color label.c-7 {
-	background: #d6c1d7;
-}
-
-.shop__sidebar__color label.c-8 {
-	background: #ed1c24;
-}
-
-.shop__sidebar__color label.c-9 {
-	background: #ffffff;
-}
-
-.shop__sidebar__color label:after {
+.shop__sidebar__color a:after {
 	position: absolute;
 	left: -3px;
 	top: -3px;
@@ -1363,7 +1328,7 @@ ol {
 	border-radius: 50%;
 }
 
-.shop__sidebar__color label input {
+.shop__sidebar__color a  {
 	position: absolute;
 	visibility: hidden;
 }

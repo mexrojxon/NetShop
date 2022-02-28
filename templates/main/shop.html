@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+    <style>
+        a:hover{
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
@@ -10,7 +18,7 @@
                     <div class="breadcrumb__text">
                         <h4>Shop</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
+                            <a href="{% url 'pages:home' %}">Home</a>
                             <span>Shop</span>
                         </div>
                     </div>
@@ -34,16 +42,17 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ page_obj.paginator.count }} results</p>
+                                    <p>Showing {{ page_obj.start_index }}–{{ page_obj.end_index }}
+                                        of {{ page_obj.paginator.count }} results</p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
                                     <p>Sort by Price:</p>
                                     <select>
+                                        <option value="">- - -</option>
                                         <option value="">Low To High</option>
-                                        <option value="">$0 - $55</option>
-                                        <option value="">$55 - $100</option>
+                                        <option value="">High To Low</option>
                                     </select>
                                 </div>
                             </div>
@@ -132,4 +141,18 @@
     </section>
     <!-- Shop Section End -->
 
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        function getParamSearch(name, value) {
+        var searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has(name) && searchParams.get(name) == value) {
+            searchParams.delete(name);
+        } else {
+            searchParams.set(name, value);
+        }
+        window.location.search = searchParams.toString();
+    }
+    </script>
 {% endblock %}

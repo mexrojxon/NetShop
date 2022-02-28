@@ -94,12 +94,14 @@ class ProductModel(models.Model):
         related_name='products',
         verbose_name=_('color'),
         null=True,
+        blank=True,
     )
     size = models.ManyToManyField(
         SizeModel,
         related_name='products',
         verbose_name=_('size'),
         null=True,
+        blank=True,
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created at'))
 

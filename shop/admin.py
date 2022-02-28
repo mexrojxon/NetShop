@@ -51,3 +51,6 @@ class ProductModelAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_filter = ['created_at']
     autocomplete_fields = ['tag', 'category']
+
+    def color(self, obj):
+        return mark_safe('<div style="background:{}; width:20px; height:20px;border-radius:50%; border:2px solid #000; margin-left:10px;"></div>' .format(obj))

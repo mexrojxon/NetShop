@@ -1,5 +1,6 @@
+import color as color
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from .models import *
 
 
@@ -14,6 +15,7 @@ class ShopView(ListView):
         context['brands'] = BrandModel.objects.all()
         context['tags'] = TagModel.objects.all()
         context['colors'] = ColorModel.objects.all()
+        context['sizes'] = SizeModel.objects.all()
         return context
 
     def get_queryset(self):
@@ -26,24 +28,29 @@ class ShopView(ListView):
         cat = self.request.GET.get('cat')
         if cat:
             qs = qs.filter(category_id=cat)
-            return qs
 
         brand = self.request.GET.get('brand')
         if brand:
             qs = qs.filter(brand_id=brand)
-            return qs
 
         tag = self.request.GET.get('tag')
         if tag:
             qs = qs.filter(tag__name=tag)
-            return qs
+
+        size = self.request.GET.get('size')
+        if size:
+            qs = qs.filter(size_id=size)
 
         color = self.request.GET.get('color')
         if color:
-            qs = qs.filter(color__code=color)
+            qs = qs.filter(color_id=color)
+
         return qs
 
 
 class ProductDetailView(DetailView):
     model = ProductModel
     template_name = 'main/shop-details.html'
+
+class ShopCardView(TemplateView):
+    template_name = 'main/shopping-cart.html'
